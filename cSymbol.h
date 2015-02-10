@@ -33,10 +33,26 @@ class cSymbol
             mSymbol = symbol;
         }
         
+        bool GetType()
+        {
+            return m_IsType;
+        }
+        
+        void SetType()
+        {
+            m_IsType = true;
+        }
+        
+        string GetName()
+        {
+            return mSymbol;
+        }
+        
     protected:
         string mSymbol;
         int mSequence;
         static int symbolCount;
+        bool m_IsType;
 };
 
 #endif

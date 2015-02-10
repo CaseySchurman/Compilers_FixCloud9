@@ -1,29 +1,26 @@
 // parser
 //
-// Phil Howard
+// Casey Schurman
 //
+// casey.schurman@oit.edu
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
-#include "cSymbol.h"
-#include "cSymbolTable.h"
 #include "lex.h"
-#include "langparse.h"
 
-extern void *yyast_root;
-int cSymbol::symbolCount = 0; 
+
+extern cAstNode * yyast_root;
 cSymbolTable * symbolTableRoot;
 
 int main(int argc, char **argv)
 {
     std::cout << "Casey Schurman" << std::endl;
-
+    symbolTableRoot = new cSymbolTable();
+    
     const char *outfile_name;
     int result = 0;
     std::streambuf *cout_buf = std::cout.rdbuf();
-
-    symbolTableRoot = new cSymbolTable();
 
     if (argc > 1)
     {
@@ -51,19 +48,20 @@ int main(int argc, char **argv)
     std::cout.rdbuf(output.rdbuf());
 
     result = yyparse();
-    while (yyast_root != NULL)
+    if (yyast_root != NULL)
     {
         if (result == 0)
         {
-            output << "Successful compilation\n";
-        } 
-        else 
-        {
+            output << yyast_root->toString() << std::endl;
+        } else {
             output << "Errors in compile\n";
-            return result;
+            //return result;
         }
+    }
 
-        result = yyparse();
+    if (yylex() != 0)
+    {
+        std::cout << "Junk at end of program\n";
     }
 
     output.close();

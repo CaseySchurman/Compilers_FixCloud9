@@ -19,6 +19,23 @@ class cSymbolTable
         cSymbolTable()
         {
             mSymbolTables = new stack<unordered_map<string,cSymbol *>>;
+            unordered_map<string,cSymbol*> global_map;
+           
+            
+            cSymbol * sym = new cSymbol("char");
+            sym->SetType();
+            global_map.insert( std::pair<string,cSymbol*>("char", sym));
+
+            sym = new cSymbol("int");
+            sym->SetType();
+            global_map.insert( std::pair<string,cSymbol*>("int", sym));
+            
+            sym = new cSymbol("float");
+            sym->SetType();
+            global_map.insert( std::pair<string,cSymbol*>("float", sym));
+            
+            mSymbolTables->push(global_map);
+            
         }
         
         void IncreaseScope()
@@ -32,30 +49,33 @@ class cSymbolTable
             mSymbolTables->pop();
         }
         
-        void InsertSymbol(string key, cSymbol * symbol)
+        cSymbol* InsertSymbol(string key)
         {
-            std::pair<string, cSymbol *> pear (key, symbol);
-            mSymbolTables->top().insert(pear);
+            cSymbol * symbol = CurLookup(key);
+            if(symbol == nullptr)
+            {
+                symbol = new cSymbol(key);
+                std::pair<string, cSymbol *> pear (key, symbol);
+                mSymbolTables->top().insert(pear);
+            }
+            return symbol;
         }
         
         cSymbol * FullLookup(string target)
         {
             stack<unordered_map<string,cSymbol*>> * copy = new stack<unordered_map<string,cSymbol*>>;
-            bool found = false;
             cSymbol * temp = CurLookup(target);
 
-            while (mSymbolTables->empty() == false && found == false && temp == nullptr)
+            while (!mSymbolTables->empty() && temp == nullptr)
             {
                 temp = CurLookup(target);
-                if(temp != nullptr)
-                    found = true;
-                else
+                if(temp == nullptr)
                 {
                     copy->push(mSymbolTables->top());
                     mSymbolTables->pop();
                 }
             }
-            while(copy->empty() != false)
+            while(!copy->empty())
             {
                 mSymbolTables->push(copy->top());
                 copy->pop();
@@ -63,7 +83,10 @@ class cSymbolTable
             delete copy;
             return temp;
         }
-
+        
+        
+        //This function is pretty worthless since your insert function shuold be doing this before inserting
+        //a symbol
         cSymbol * CurLookup(string target)
         {   
            unordered_map<string, cSymbol *>::const_iterator found =  mSymbolTables->top().find(target);

@@ -1,7 +1,8 @@
 COPTS=-Wall -g -c  -O0 -std=c++0x
 OBJS=main.o \
 	 langlex.o \
-	 langparse.o
+	 langparse.o \
+	 cSymbol.o \
 
 all: lang
 
@@ -30,6 +31,3 @@ langparse.c: lang.y
 
 lang: $(OBJS)
 	g++ $(OBJS) -o lang
-
-langlex.o: langlex.c
-	g++ $(COPTS) -Wno-sign-compare langlex.c -o $@

@@ -1,11 +1,49 @@
 #pragma once
-#include "langparse.h"
-#include "cSymbolTable.h"
-#include "cSymbol.h"
+//**************************************
+// lex.h
+//
+// Defines global symbols used the the flex generated lexer and 
+// bison generated parser.
+//
+// Author: Casey Schurman casey.schurman@oit.edu
+//
 
-int yyparse();
-int yylex();
+#include "cSymbolTable.h"
+#include "cAstNode.h"
+#include "BlockNode.h"
+#include "PrintNode.h"
+#include "StmtsNode.h"
+#include "StmtNode.h"
+#include "ExprNode.h"
+#include "IntExprNode.h"
+#include "FloatExprNode.h"
+#include "BinaryExprNode.h"
+#include "VarRef.h"
+#include "VarDecl.h"
+#include "VarPart.h"
+#include "DeclNode.h"
+#include "DeclsNode.h"
+#include "ArraySpec.h"
+#include "ArrayVal.h"
+#include "IfNode.h"
+#include "WhileNode.h"
+#include "ScanNode.h"
+#include "ReturnNode.h"
+#include "AssignNode.h"
+#include "StructDeclNode.h"
+#include "FuncPrefix.h"
+#include "FuncHeader.h"
+#include "FuncCall.h"
+#include "FuncDecl.h"
+#include "ParamNode.h"
+#include "ParamSpec.h"
+#include "ParamsNode.h"
+#include "ParamsSpec.h"
+#include "langparse.h"
+
 extern char *yytext;
 extern int yylineno;
-extern FILE *yyin;
 extern cSymbolTable *symbolTableRoot;
+extern FILE *yyin;          // input file for lexer
+extern int yyparse();
+extern int yylex();
