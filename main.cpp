@@ -9,7 +9,6 @@
 #include <fstream>
 #include "lex.h"
 
-
 extern cAstNode * yyast_root;
 cSymbolTable * symbolTableRoot;
 
@@ -17,6 +16,7 @@ int main(int argc, char **argv)
 {
     std::cout << "Casey Schurman" << std::endl;
     symbolTableRoot = new cSymbolTable();
+    
     
     const char *outfile_name;
     int result = 0;
@@ -54,7 +54,7 @@ int main(int argc, char **argv)
         {
             output << yyast_root->toString() << std::endl;
         } else {
-            output << "Errors in compile\n";
+            output << yynerrs << " Errors in compile\n";
             //return result;
         }
     }
@@ -68,4 +68,5 @@ int main(int argc, char **argv)
     std::cout.rdbuf(cout_buf);
 
     return result;
+    //return 0;
 }

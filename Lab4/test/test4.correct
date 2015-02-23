@@ -1,0 +1,17 @@
+BLOCK: 
+{
+DECLS:
+{
+VAR: sym: char 1 sym: aaa 4
+VAR: sym: int 2 sym: bbb 5
+VAR: sym: float 3 sym: ccc 6
+}
+STMTS:
+{
+PRINT: (EXPR: 1)
+PRINT: (EXPR: 2)
+PRINT: (VarRef: sym: aaa 4)
+PRINT: (EXPR: 4)
+}
+}
+

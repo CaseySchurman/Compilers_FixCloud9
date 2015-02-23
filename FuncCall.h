@@ -8,6 +8,7 @@
 #include "ParamsNode.h"
 #include "StmtNode.h"
 #include "ExprNode.h"
+#include "DeclNode.h"
 
 class FuncCall : public StmtNode, public ExprNode
 {
@@ -18,6 +19,11 @@ class FuncCall : public StmtNode, public ExprNode
         virtual string toString()
         {
             return "(FUNC CALL: " + m_ID->toString() + m_Parameters->toString() + ")\n";
+        }
+        
+        DeclNode * GetType()
+        {
+            return m_ID->GetType();
         }
     
     private:

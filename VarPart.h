@@ -1,12 +1,14 @@
-#pragma once
-
-#include "ExprNode.h"
-#include "cSymbol.h"
 //Created By Casey Schurman
 //Date: 2/8/2015
 //Defines a VarPart object
 
+#pragma once
+
+#include "ExprNode.h"
+#include "cSymbol.h"
 #include "ArrayVal.h"
+
+extern cSymbolTable * symbolTableRoot;
 
 class VarPart : public ExprNode
 {
@@ -22,6 +24,22 @@ class VarPart : public ExprNode
                 temp += '[' + m_Array->toString() + ']';
                 
             return temp;
+        }
+        
+        //Return's Type of Symbol
+        DeclNode * GetType()
+        {
+            return m_Sym->GetType();
+        }
+        
+        cSymbol * GetSym()
+        {
+            return m_Sym;
+        }
+        
+        void SetSym(cSymbol * sym)
+        {
+            m_Sym = sym;
         }
     
     private:

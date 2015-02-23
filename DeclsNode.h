@@ -14,6 +14,7 @@ class DeclsNode
     public:
         DeclsNode()
         {}
+        
         virtual string toString()
         {
             string temp = "DECLS:\n{\n";
@@ -29,6 +30,7 @@ class DeclsNode
             
             return temp;
         }
+        
         void AddNode(DeclNode * nn)
         {
             mDecls.push_back(nn);

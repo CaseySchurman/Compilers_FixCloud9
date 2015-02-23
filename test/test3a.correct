@@ -1,0 +1,35 @@
+BLOCK: 
+{
+DECLS:
+{
+STRUCT: DECLS:
+{
+VAR: sym: int 2 sym: a 4
+VAR: sym: int 2 sym: b 5
+}
+ sym: struct_1 6
+STRUCT: DECLS:
+{
+VAR: sym: int 2 sym: c 7
+VAR: sym: int 2 sym: b 8
+VAR: sym: struct_1 6 sym: d 9
+}
+ sym: struct_2 10
+VAR: sym: struct_1 6 sym: aa 11
+VAR: sym: struct_2 10 sym: bb 12
+VAR: sym: int 2 sym: cc 13
+VAR: sym: struct_2 10 sym: dd 14
+}
+STMTS:
+{
+(ASSIGN: (VarRef: sym: bb 12 (VarRef: sym: d 9 (VarRef: sym: a 4))) = (EXPR: 3))
+(ASSIGN: (VarRef: sym: aa 11 (VarRef: sym: a 4)) = (EXPR: 1))
+(ASSIGN: (VarRef: sym: aa 11 (VarRef: sym: b 5)) = (VarRef: sym: aa 11 (VarRef: sym: a 4)))
+(ASSIGN: (VarRef: sym: bb 12 (VarRef: sym: c 7)) = (EXPR: 1))
+(ASSIGN: (VarRef: sym: bb 12 (VarRef: sym: b 8)) = (VarRef: sym: bb 12 (VarRef: sym: c 7)))
+(ASSIGN: (VarRef: sym: bb 12 (VarRef: sym: d 9 (VarRef: sym: a 4))) = (EXPR: 3))
+(ASSIGN: (VarRef: sym: bb 12 (VarRef: sym: d 9 (VarRef: sym: b 5))) = (VarRef: sym: bb 12 (VarRef: sym: d 9 (VarRef: sym: a 4))))
+(ASSIGN: (VarRef: sym: dd 14) = (VarRef: sym: bb 12))
+}
+}
+

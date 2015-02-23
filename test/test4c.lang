@@ -1,0 +1,12 @@
+{
+    int aa;
+    struct
+    {
+        int aa;
+        int bb;
+    } s0;
+
+    s0 bb;
+    print(bb.aa);
+    print(bb.bb);
+}

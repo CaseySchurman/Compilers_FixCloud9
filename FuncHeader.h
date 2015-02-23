@@ -6,6 +6,7 @@
 
 #include "FuncPrefix.h"
 #include "ParamsSpec.h"
+#include "cSymbol.h"
 #include <string>
 using std::string;
 
@@ -25,6 +26,11 @@ class FuncHeader
                 temp += "()";
                 
             return temp;
+        }
+        
+        cSymbol* GetTypeSymbol()
+        {
+            return m_Prefix->GetTypeSymbol();
         }
     
     private:

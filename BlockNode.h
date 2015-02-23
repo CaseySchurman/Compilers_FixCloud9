@@ -9,10 +9,11 @@
 #include "StmtsNode.h"
 #include "DeclsNode.h"
 #include "cAstNode.h"
+#include "StmtNode.h"
 
 using std::string;
 
-class BlockNode : public cAstNode
+class BlockNode : public StmtNode
 {
     public:
         BlockNode(DeclsNode * decl, StmtsNode * stmts) : mDecls(decl), mStmts(stmts)

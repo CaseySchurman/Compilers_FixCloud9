@@ -1,0 +1,22 @@
+{
+    char aa;
+    int bb;
+    float cc;
+
+    // removed aa = 1;
+    bb = 2;
+    cc = 3.4;
+
+    bb = aa;
+    cc = bb;
+    cc = aa;
+
+    aa = 128;
+    aa = bb;
+    aa = cc;
+    bb = cc;
+    bb = cc*bb;
+    bb = bb*cc;
+    bb = 2 * 1.3;
+}
+

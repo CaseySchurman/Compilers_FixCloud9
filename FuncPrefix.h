@@ -19,6 +19,11 @@ class FuncPrefix
         {
             return m_ID->toString();
         }
+        
+        cSymbol* GetTypeSymbol()
+        {
+            return m_TypeID;
+        }
     
     private:
         cSymbol * m_TypeID;

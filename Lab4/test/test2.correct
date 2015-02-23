@@ -1,0 +1,11 @@
+BLOCK: 
+{
+STMTS:
+{
+PRINT: (EXPR: 1)
+PRINT: (EXPR: 2)
+PRINT: (EXPR: 3)
+PRINT: (EXPR: 4)
+}
+}
+

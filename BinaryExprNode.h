@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "DeclNode.h"
 #include "ExprNode.h"
 #include <string>
 using std::string;
@@ -18,6 +19,36 @@ class BinaryExprNode : public ExprNode
         string toString()
         {
             return "(EXPR: " + m_expr1->toString() + " " + m_oper + " " + m_expr2->toString() + ")";
+        }
+        
+        DeclNode * GetType()
+        {
+            DeclNode * left = m_expr1->GetType();
+            DeclNode * right = m_expr2->GetType();
+            
+            if (left == right || left->IsFloat())
+            {
+                return left; // Return the float
+            }
+            else if (right->IsFloat())
+            {
+                return right; // Return the float
+            }
+            else
+            {
+                if (left->GetSize() == 4)
+                {
+                    return left; // Return the int
+                }
+                else if (right->GetSize() == 4)
+                {
+                    return right; // Return the int
+                }
+                else
+                {
+                    return left; // Both are chars so return either of them
+                }
+            }
         }
     private:
         ExprNode * m_expr1;

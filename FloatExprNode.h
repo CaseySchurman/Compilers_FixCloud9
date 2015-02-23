@@ -4,9 +4,12 @@
 
 #pragma once
 
+#include "DeclNode.h"
 #include "ExprNode.h"
 #include <string>
 using std::string;
+
+extern cSymbolTable * symbolTableRoot;
 
 class FloatExprNode : public ExprNode
 {
@@ -17,6 +20,11 @@ class FloatExprNode : public ExprNode
         string toString()
         {
             return "(EXPR: " + std::to_string(m_val) + ")";
+        }
+        
+        DeclNode * GetType()
+        {
+           return symbolTableRoot->FullLookup("float")->GetType();
         }
     private:
         double m_val;

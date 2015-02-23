@@ -1,0 +1,42 @@
+BLOCK: 
+{
+DECLS:
+{
+VAR: sym: int 2 sym: a 4
+(FUNC: sym: f1 5()
+)
+(FUNC: sym: f2 6(PARAMS:VAR: sym: int 2 sym: a 7)
+
+)
+(FUNC: sym: f3 8(PARAMS:VAR: sym: int 2 sym: a 9 VAR: sym: float 3 sym: b 10)
+
+)
+(FUNC: sym: f4 11(PARAMS:VAR: sym: int 2 sym: a 12)
+
+STMTS:
+{
+RETURN: (VarRef: sym: a 12)
+}
+
+)
+(FUNC: sym: f5 13(PARAMS:VAR: sym: int 2 sym: a 14)
+
+DECLS:
+{
+VAR: sym: int 2 sym: b 15
+}
+
+STMTS:
+{
+(ASSIGN: (VarRef: sym: a 14) = (VarRef: sym: b 15))
+}
+
+)
+}
+STMTS:
+{
+(FUNC CALL: sym: f5 13(PARAM:(VarRef: sym: a 4))
+)
+}
+}
+

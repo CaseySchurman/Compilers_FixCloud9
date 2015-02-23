@@ -5,9 +5,6 @@
 #pragma once
 
 #include "ExprNode.h"
-#include <string>
-
-using std::string;
 
 class ArrayVal
 {
@@ -22,7 +19,7 @@ class ArrayVal
             for (it = mVals.begin(); it != mVals.end(); it++)
                 temp += ' ' + (*it)->toString();
                 
-            temp += ")\n";
+            temp += ")";
             
             return temp;
         }

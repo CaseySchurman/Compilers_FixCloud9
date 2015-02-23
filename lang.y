@@ -1,4 +1,4 @@
-/* lang.y created by Casey Schurman, last edited 2/9/2015*/
+/* lang.y created by Casey Schurman, last edited 2/22/2015*/
 
 %{
 #include <iostream>
@@ -32,6 +32,7 @@
     ParamsNode*     params_node;
     ParamSpec*      param_spec;
     ParamsSpec*     params_spec;
+    unordered_map<string,cSymbol*>* map_node;
     }
 
 %{
@@ -50,17 +51,19 @@
 %token  SCAN PRINT
 %token  WHILE IF ELSE 
 %token  STRUCT
+%token  ARRAY
 %token  RETURN_TOK
 %token  JUNK_TOKEN
 
 %type <ast_node> program
 %type <block_node> block
-%type <sym_table> open
+%type <map_node> open
 %type <sym_table> close
 %type <decls_node> decls
 %type <decl_node> decl
 %type <decl_node> var_decl
 %type <decl_node> struct_decl
+%type <decl_node> array_decl
 %type <decl_node> func_decl
 %type <fun_header> func_header
 %type <fun_prefix> func_prefix
@@ -92,8 +95,8 @@ program: block                  { $$ = $1;
 block:  open decls stmts close  { $$ = new BlockNode($2, $3); }
     |   open stmts close        { $$ = new BlockNode(nullptr, $2); }
 open:   '{'                     {
-                                    symbolTableRoot->IncreaseScope();
-                                    $$ = NULL;
+                                    $$ = symbolTableRoot->IncreaseScope();
+                                    //$$ = NULL;
                                 }
 close:  '}'                     {
                                     symbolTableRoot->DecreaseScope();
@@ -112,21 +115,45 @@ decls:      decls decl          {
                                     $$->AddNode($1);
                                 }
 decl:       var_decl ';'        { $$ = $1; }
-        |   struct_decl ';'     { $$ = $1;}
-        |   func_decl           { $$ = $1;}
+        |   struct_decl ';'     { $$ = $1; }
+        |   func_decl           { $$ = $1; }
+        |   array_decl ';'      { $$ = $1; } 
         |   error ';'           {}
-var_decl:   TYPE_ID IDENTIFIER arrayspec    
+var_decl:   TYPE_ID IDENTIFIER  
                                 {
-                                    $2 = symbolTableRoot->InsertSymbol($2->GetName());
-                                    $$ = new VarDecl($1, $2, $3); 
+                                    
+                                    if (symbolTableRoot->CurLookup($2->GetName()) == nullptr)
+                                    {
+                                        $2 = symbolTableRoot->InsertSymbol($2);
+                                        $2->SetType($1->GetType());
+                                        $2->SetDeclared();
+                                        $$ = new VarDecl($1, $2);
+                                        
+                                    }
+                                    else
+                                    {
+                                        semantic_error("Symbol " + $2->GetName() + " already defined in current scope");
+                                        YYERROR;
+                                    }
                                 }
-        |   struct_decl IDENTIFIER arrayspec
-                                {}
+array_decl: ARRAY TYPE_ID IDENTIFIER arrayspec
+                                {
+                                    $3 = symbolTableRoot->InsertSymbol($3);
+                                    $3->SetIsType();
+                                    $3->SetDeclared();
+                                    
+                                    $$ = new ArrayDecl($2, $3, $4); 
+                                    $3->SetType($2->GetType());
+                                }
 struct_decl:  STRUCT open decls close IDENTIFIER    
                                 {
-                                    $5->SetType();
-                                    //$$ = new StructDeclNode($3, $5);
+                                    $5 = symbolTableRoot->InsertSymbol($5);
+                                    $5->SetIsType();
+                                    $5->SetDeclared();
+                                    
                                     $$ = new StructDeclNode($2, $3, $5);
+                                    
+                                    $5->SetType($$);
                                 }
 func_decl:  func_header ';'     { 
                                     $$ = new FuncDecl($1, nullptr, nullptr);
@@ -148,6 +175,7 @@ func_header: func_prefix paramsspec ')'
         
 func_prefix: TYPE_ID IDENTIFIER '('
                                 {
+                                    $2 = symbolTableRoot->InsertSymbol($2);
                                     symbolTableRoot->IncreaseScope();
                                     $$ = new FuncPrefix($1, $2);
                                 }
@@ -156,7 +184,9 @@ paramsspec:
             paramsspec',' paramspec 
                                 {
                                     if ($1 == nullptr)
+                                    {
                                         $1 = new ParamsSpec();
+                                    }
                                     $$ = $1;
                                     $$->AddNode($3);
                                 }
@@ -170,7 +200,9 @@ paramspec:  var_decl            { $$ = new ParamSpec((VarDecl*)$1); }
 arrayspec:  arrayspec '[' INT_VAL ']'
                                 {
                                     if ($1 == nullptr)
+                                    {
                                         $1 = new ArraySpec();
+                                    }
                                     $$ = $1;
                                     $$->AddNode($3);
                                 }
@@ -192,9 +224,12 @@ stmt:       IF '(' expr ')' stmt
                                 { $$ = new PrintNode($3); }
         |   SCAN '(' lval ')' ';'
                                 { $$ = new ScanNode($3); }
-        |   lval '=' expr ';'   { $$ = new AssignNode((VarRef*)$1, $3); }
-        |   func_call ';'       {}
-        |   block               {}
+        |   lval '=' expr ';'   { 
+                                  $$ = new AssignNode((VarRef*)$1, $3);
+                                  
+                                }
+        |   func_call ';'       { $$ = $1; }
+        |   block               { $$ = $1; }
         |   RETURN_TOK expr ';' { $$ = new ReturnNode($2); }
         |   error ';'           {}
 
@@ -202,21 +237,40 @@ func_call:  IDENTIFIER '(' params ')'
                                 { $$ = new FuncCall($1, $3); }
 varref:   varref '.' varpart    {
                                     if ($1 == nullptr)
+                                    {
                                         $$ = new VarRef();
+                                    }
                                     $$ = $1;
                                     $$->AddNode($3);
+                                    
+                                    if($$->SemanticError())
+                                    {
+                                        YYERROR;
+                                    }
+                                    
                                 }
         | varpart               {
                                     $$ = new VarRef();
                                     $$->AddNode($1);
+                                    if($$->SemanticError())
+                                    {
+                                        YYERROR;
+                                    }
                                 }
 
-varpart:  IDENTIFIER arrayval   { $$ = new VarPart($1, $2); }
+varpart:  IDENTIFIER arrayval   { 
+                                   $1 = symbolTableRoot->InsertSymbol($1);
+                                   $$ = new VarPart($1, $2); 
+                                   
+                                   
+                                }
 
 lval:     varref                { $$ = $1; }
 arrayval: arrayval '[' expr ']' {
                                     if ($1 == nullptr)
+                                    {
                                         $1 = new ArrayVal();
+                                    }
                                     $$ = $1;
                                     $$->AddNode($3);
                                 }
@@ -224,7 +278,9 @@ arrayval: arrayval '[' expr ']' {
 
 params:     params',' param     {
                                     if ($1 == nullptr)
+                                    {
                                         $1 = new ParamsNode();
+                                    }
                                     $$ = $1;
                                     $$->AddNode($3);
                                 }
@@ -259,4 +315,12 @@ int yyerror(const char *msg)
         << yytext << " on line " << yylineno << "\n";
 
     return 0;
+}
+
+void semantic_error(std::string msg)
+{
+    std::cout << "ERROR: " << msg << 
+                 " on line " << yylineno << std::endl;
+
+    yynerrs++;
 }

@@ -1,0 +1,206 @@
+{
+{
+   print(5);
+}
+{
+   print(1);
+   print(2);
+   print(3);
+   print(4);
+}
+{
+   print(1.7*5+2*3.5);
+}
+{
+   char aaa;
+   int bbb;
+   float ccc;
+
+   print(1);
+   print(2);
+   print(aaa);
+   print(4);
+}
+{
+  char aaa;
+  int bbb;
+  float ccc;
+
+  scan(ccc);
+  if (aaa) return 5;
+  if (bbb+5)
+    return(5);
+}
+{
+  char aaa;
+  int bbb;
+  float ccc;
+
+  scan(ccc);
+  if (aaa) return 5;
+  if (bbb+5)
+    return(5);
+  else
+    print(aaa);
+}
+
+{
+  char aaa;
+  int bbb;
+  float ccc;
+
+  scan(ccc);
+  if (aaa) return 5;
+  if (bbb+5)
+    return(5);
+  else
+    print(aaa);
+
+  while (2) print(3);
+}
+
+{
+  char aaa;
+  int bbb;
+  float ccc;
+
+  scan(ccc);
+  if (aaa) return 5;
+  if (bbb+5)
+    return(5);
+  else
+    print(aaa);
+
+  while (2) print(3);
+  while (4)
+  {
+    print(5);
+    print(6);
+  }
+
+  if (aaa)
+  {
+    print(1);
+    print(2);
+  } 
+}
+
+{
+  char aaa;
+  int bbb;
+  float ccc;
+
+  scan(ccc);
+  if (aaa) return 5;
+  if (bbb+5)
+    return(5);
+  else
+    print(aaa);
+
+  while (2) print(3);
+  while (4)
+  {
+    print(5);
+    print(6);
+  }
+
+  if (aaa)
+  {
+    print(1);
+    print(2);
+  } else if (5)
+    while (7)
+      print(2);
+}
+
+{
+  char aaa;
+  int bbb;
+  float ccc;
+
+  scan(ccc);
+  if (aaa) return 5;
+  if (bbb+5)
+    return(5);
+  else
+    print(aaa);
+
+  while (2) print(3);
+  while (4)
+  {
+    print(5);
+    print(6);
+  }
+
+  if (aaa)
+  {
+    print(1);
+    print(2);
+  } else if (5)
+    while (7)
+      print(2);
+  return (aaa+5);
+
+  aaa = 12;
+  bbb = 12+aaa;
+}
+
+{
+  char aaa;
+  char bbb;
+
+  print(aaa);
+  {
+     int aaa;
+     print(aaa);
+     print(bbb);
+  }
+
+  print(aaa);
+  print(bbb);
+}
+{
+   int aa;
+   struct
+   {
+      int aa;
+      int bb;
+   } a_struct;
+
+   int bb;
+   a_struct cc;
+
+   print(aa);
+}
+{
+  int a;
+  int f1();
+  int f2(int a);
+  float f3(int a, float b);
+
+  float f4(int a)
+  {
+    return a;
+  }
+
+  float f5(int a)
+  {
+    int b;
+    a = b;
+  }
+
+  f5(a);
+}
+
+{
+   int val;
+   array int a1[2];
+   array int a2[2][5];
+   a1 arr1;
+   a2 arr2;
+
+   arr1[1] = 5;
+   arr1[2] = arr1[5];
+   arr2[1][4] = arr2[0][3];
+}
+}

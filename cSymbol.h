@@ -4,6 +4,7 @@
 #ifndef CSYMBOL_H
 #define CSYMBOL_H
 
+#include "DeclNode.h"
 #include <iostream>
 #include <string>
 using std::string;
@@ -33,26 +34,47 @@ class cSymbol
             mSymbol = symbol;
         }
         
-        bool GetType()
-        {
-            return m_IsType;
-        }
-        
-        void SetType()
-        {
-            m_IsType = true;
-        }
-        
         string GetName()
         {
             return mSymbol;
+        }
+        
+        DeclNode * GetType()
+        {
+            return m_Decl;
+        }
+
+        void SetType(DeclNode * type)
+        {
+            m_Decl = type;
+        }
+        
+        void SetDeclared()
+        {
+            mIsDeclared = true;
+        }
+        
+        bool GetDeclared()
+        {
+            return mIsDeclared;
+        }
+        
+        void SetIsType()
+        {
+            mIsType = true;
+        }
+        
+        bool IsType()
+        {
+            return mIsType;
         }
         
     protected:
         string mSymbol;
         int mSequence;
         static int symbolCount;
-        bool m_IsType;
+        DeclNode * m_Decl;
+        bool mIsDeclared;
+        bool mIsType;
 };
-
 #endif

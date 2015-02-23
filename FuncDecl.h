@@ -29,6 +29,16 @@ class FuncDecl : public DeclNode
             
             return temp;
         }
+        
+        int GetSize()
+        {
+            return -150;
+        }
+        
+        string GetTypeName()
+        {
+            return m_Header->GetTypeSymbol()->GetName();
+        }
     
     private:
         FuncHeader * m_Header;

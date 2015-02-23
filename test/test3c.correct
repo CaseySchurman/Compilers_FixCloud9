@@ -1,0 +1,5 @@
+ERROR: Cannot assign struct_1 to a int on line 19
+ERROR: Cannot assign int to a struct_1 on line 20
+ERROR: Cannot assign struct_2 to a struct_1 on line 21
+ERROR: Cannot assign struct_2 to a int on line 22
+4 Errors in compile

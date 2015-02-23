@@ -25,6 +25,7 @@
 #include "DeclsNode.h"
 #include "ArraySpec.h"
 #include "ArrayVal.h"
+#include "ArrayDecl.h"
 #include "IfNode.h"
 #include "WhileNode.h"
 #include "ScanNode.h"
@@ -39,7 +40,9 @@
 #include "ParamSpec.h"
 #include "ParamsNode.h"
 #include "ParamsSpec.h"
+#include "BaseDeclNode.h"
 #include "langparse.h"
+
 
 extern char *yytext;
 extern int yylineno;
@@ -47,3 +50,5 @@ extern cSymbolTable *symbolTableRoot;
 extern FILE *yyin;          // input file for lexer
 extern int yyparse();
 extern int yylex();
+extern int yynerrs;
+extern void semantic_error(std::string msg);

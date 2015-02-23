@@ -35,22 +35,24 @@ junk        .
 "scan"                      RETURN(SCAN);
 "struct"                    RETURN(STRUCT);
 "return"                    RETURN(RETURN_TOK);
+"array"                     RETURN(ARRAY);
 
 {identifiers}	{
-                  
                     yylval.symbol = symbolTableRoot->FullLookup(yytext);
                   
-                    if(yylval.symbol == nullptr)
+                    if(yylval.symbol != nullptr)
                     {
-                        yylval.symbol = symbolTableRoot->InsertSymbol(yytext);
+                        if(yylval.symbol->IsType())
+                        {
+                            RETURN(TYPE_ID);
+                        }
                     }
-                    else
-                    {
-                        if(yylval.symbol->GetType())
-                            return(TYPE_ID);
-                    }
+                    //else
+                    //{
+                        yylval.symbol = new cSymbol(yytext);
+                    //}
                     
-                    return(IDENTIFIER);
+                    RETURN(IDENTIFIER);
                     
                 }
 {integer}	{   
@@ -65,7 +67,8 @@ junk        .
 {operators}	RETURN (yytext[0]);
 {whitespace}                {};
 {comment}                   {};
-{junk}		RETURN (JUNK_TOKEN);	
+{junk}		RETURN (JUNK_TOKEN);
+
 %%
 
 //This function allows us to do extra processing on each token
