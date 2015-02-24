@@ -54,6 +54,11 @@ class StructDeclNode : public DeclNode
             return m_ID->GetName();
         }
         
+        DeclNode * GetBaseType()
+        {
+            return m_ID->GetType();
+        }
+        
     private:
         unordered_map<string,cSymbol*> * m_Symbols;
         DeclsNode * m_Decl;

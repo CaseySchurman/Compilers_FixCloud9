@@ -1,0 +1,26 @@
+{
+    int foo();
+    float bar();
+    array int idata[5];
+    array float fdata[7];
+
+    int aa;
+    float bb;
+    idata cc;
+    fdata dd;
+
+    aa = foo();
+    aa = bar();
+    aa = cc[1];
+    aa = dd[2];
+
+    bb = foo();
+    bb = bar();
+    bb = cc[3];
+    bb = dd[4];
+
+    aa = cc;
+    cc = aa;
+    cc = dd;
+    cc = cc;
+}

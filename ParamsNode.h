@@ -18,7 +18,7 @@ class ParamsNode : public StmtNode
             list<ParamNode*>::const_iterator it;
             
             for (it = mParameters.begin(); it != mParameters.end(); it++)
-                temp += (*it)->toString() + ' ';
+                temp += ' ' + (*it)->toString();
                 
             temp += ")\n";
             

@@ -18,7 +18,7 @@ class FuncCall : public StmtNode, public ExprNode
         {}
         virtual string toString()
         {
-            return "(FUNC CALL: " + m_ID->toString() + m_Parameters->toString() + ")\n";
+            return "(FUNC CALL: " + m_ID->toString() + m_Parameters->toString() + ")";
         }
         
         DeclNode * GetType()

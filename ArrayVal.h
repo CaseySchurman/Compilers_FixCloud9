@@ -13,11 +13,12 @@ class ArrayVal
         {}
         virtual string toString()
         {
-            string temp = "(ARRAYVAL: ";
+            string temp = "(ARRAYVAL:";
             list<ExprNode*>::const_iterator it;
             
             for (it = mVals.begin(); it != mVals.end(); it++)
-                temp += ' ' + (*it)->toString();
+                temp += (*it)->toString();
+                
                 
             temp += ")";
             

@@ -28,18 +28,36 @@ class AssignNode : public StmtNode
             m_IsValid = true;
             if(m_Left->GetType() != m_Right->GetType())
             {
+                DeclNode* lft = m_Left->GetType();
+                DeclNode* rgt = m_Right->GetType();
+                bool err = false;
+                
+                if(lft->IsChar())
+                    err = true;
+                else if(lft->IsInt() && (rgt->IsFloat() || rgt->IsStruct()))
+                    err = true;
+                else if(lft->IsFloat() && rgt->IsStruct())
+                    err = true;
+                else if(lft->IsStruct() && (rgt->IsInt() || rgt->IsFloat() || rgt->IsChar()))
+                    err = true;
+                else if(lft->IsStruct() && rgt->IsStruct())
+                {
+                    if(lft->GetTypeName() != rgt->GetTypeName())
+                        err = true;
+                }
+                else if ((!lft->IsArray() && rgt->IsArray()) || (lft->IsArray() && !rgt->IsArray())) 
+                    err = true;
+                else if ((lft->IsArray() && rgt->IsArray()) && (lft->GetTypeName() != rgt->GetTypeName()))
+                    err = true;
                 //Do this
-                if(m_Left->GetType()->GetSize() < m_Right->GetType()->GetSize())
+                if(err)
                 {
                     //mLeft too small to hold mRight
                     m_IsValid = false;
                     semantic_error("Cannot assign " + m_Right->GetType()->GetTypeName() + " to a " + m_Left->GetType()->GetTypeName());
                 }
             }
-            else
-            {
-                //Valid assignment do nothing
-            }
+            
         }
 
     private:

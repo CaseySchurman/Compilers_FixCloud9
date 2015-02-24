@@ -20,7 +20,7 @@ class StmtsNode : cAstNode
         }
         virtual string toString()
         {
-            string temp = " STMTS: \n{\n";
+            string temp = "STMTS:\n{\n";
             list<StmtNode*>::const_iterator it;
             
             for (it = mStmtList.begin(); it != mStmtList.end(); it++)
@@ -28,7 +28,7 @@ class StmtsNode : cAstNode
                 temp += (*it)->toString() + '\n';
             }
             
-            temp += "\n}";
+            temp += "}\n";
             
             return temp;
         }

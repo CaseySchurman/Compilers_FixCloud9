@@ -39,6 +39,11 @@ class FuncDecl : public DeclNode
         {
             return m_Header->GetTypeSymbol()->GetName();
         }
+        
+        DeclNode * GetBaseType()
+        {
+            return m_Header->GetType();
+        }
     
     private:
         FuncHeader * m_Header;

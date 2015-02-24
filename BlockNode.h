@@ -24,10 +24,10 @@ class BlockNode : public StmtNode
             
             if (mDecls != nullptr)
                 temp += mDecls->toString() + ' ' + mStmts->toString();
-            else
+            if (mStmts != nullptr)
                 temp += mStmts->toString();
                 
-            temp += "\n}\n";
+            temp += "}\n";
             
             return temp;
         }

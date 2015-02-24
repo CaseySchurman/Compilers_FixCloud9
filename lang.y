@@ -143,7 +143,7 @@ array_decl: ARRAY TYPE_ID IDENTIFIER arrayspec
                                     $3->SetDeclared();
                                     
                                     $$ = new ArrayDecl($2, $3, $4); 
-                                    $3->SetType($2->GetType());
+                                    $3->SetType($$);
                                 }
 struct_decl:  STRUCT open decls close IDENTIFIER    
                                 {
@@ -178,6 +178,7 @@ func_prefix: TYPE_ID IDENTIFIER '('
                                     $2 = symbolTableRoot->InsertSymbol($2);
                                     symbolTableRoot->IncreaseScope();
                                     $$ = new FuncPrefix($1, $2);
+                                    $2->SetType($1->GetType());
                                 }
                                 
 paramsspec:     
@@ -259,10 +260,7 @@ varref:   varref '.' varpart    {
                                 }
 
 varpart:  IDENTIFIER arrayval   { 
-                                   $1 = symbolTableRoot->InsertSymbol($1);
                                    $$ = new VarPart($1, $2); 
-                                   
-                                   
                                 }
 
 lval:     varref                { $$ = $1; }

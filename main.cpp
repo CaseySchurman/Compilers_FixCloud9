@@ -17,7 +17,6 @@ int main(int argc, char **argv)
     std::cout << "Casey Schurman" << std::endl;
     symbolTableRoot = new cSymbolTable();
     
-    
     const char *outfile_name;
     int result = 0;
     std::streambuf *cout_buf = std::cout.rdbuf();

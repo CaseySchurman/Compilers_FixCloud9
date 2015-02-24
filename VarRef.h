@@ -30,7 +30,7 @@ class VarRef : public ExprNode
         
             }
             
-            for (size_t i = m_parts.size(); i != 0; i--)
+            for (size_t i = m_parts.size() -1 ; i >= 0; --i)
             {
                 retVal += ')';
             }

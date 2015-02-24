@@ -20,7 +20,7 @@ class ArraySpec
             std::list<int>::const_iterator it;
             
             for (it = m_Array.begin(); it != m_Array.end(); it++)
-                temp += std::to_string(*it) + ' ';
+                temp += std::to_string(*it);
                 
             temp += ")";
             

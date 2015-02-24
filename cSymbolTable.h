@@ -26,17 +26,17 @@ class cSymbolTable
             cSymbol * sym = new cSymbol("char");
             global_map->insert( std::pair<string,cSymbol*>("char", sym));
             sym->SetIsType();
-            sym->SetType( new BaseDeclNode(1,false,"char"));
+            sym->SetType( new BaseDeclNode(1,false,true,"char"));
 
             sym = new cSymbol("int");
             sym->SetIsType();
             global_map->insert( std::pair<string,cSymbol*>("int", sym));
-            sym->SetType(new BaseDeclNode(4, false,"int"));
+            sym->SetType(new BaseDeclNode(4, false,false,"int"));
             
             sym = new cSymbol("float");
             sym->SetIsType();
             global_map->insert( std::pair<string,cSymbol*>("float", sym));
-            sym->SetType(new BaseDeclNode(8, true,"float"));
+            sym->SetType(new BaseDeclNode(8, true,false,"float"));
             
             mSymbolTables.push_front(global_map);
             
@@ -70,7 +70,12 @@ class cSymbolTable
         {
             cSymbol * symbol = CurLookup(sym->GetName());
             if(symbol == nullptr)
-                mSymbolTables.front()->insert(std::pair<string,cSymbol*>(sym->GetName(), sym));
+            {
+                if(FullLookup(sym->GetName()) == sym)
+                    sym = InsertSymbol(sym->GetName());
+                else
+                    mSymbolTables.front()->insert(std::pair<string,cSymbol*>(sym->GetName(), sym));
+            }
             else
                 sym = symbol;
             return sym;

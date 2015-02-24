@@ -1,0 +1,33 @@
+{
+    struct
+    {
+       int a;
+       int b;
+    } struct_1;
+
+    struct
+    {
+       int c;
+       int b;
+       struct_1 d;
+    } struct_2;
+
+    struct_1 aa;
+    struct_2 bb;
+    int cc;
+
+    cc.a = 5;
+
+    aa.a = 1;
+    aa.b = aa.a;
+
+    bb.c = 1;
+    bb.b = bb.c;
+    bb.d.a = 3;
+    bb.d.b = bb.d.a;
+
+    bb.x = 7;
+    bb.c.y = 9;
+    bb.d.z = 8;
+    bb.d.a.a = x.y;
+}

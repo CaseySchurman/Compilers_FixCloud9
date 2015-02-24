@@ -37,9 +37,19 @@ class ArrayDecl : public DeclNode
             return -15;
         }
         
+        DeclNode * GetBaseType()
+        {
+            return m_Type->GetType();
+        }
         string GetTypeName()
         {
-            return m_Type->GetName();
+            return m_Sym->GetName();    //this is better. Ur going to return like idata and fdata or whatever the array name is
+            //return m_Type->GetName(); // here you are returning the type (like int, char etc. You want the name of the array. use m_Sym instead)
+        }
+        
+        bool IsArray()
+        {
+            return true;
         }
         
     private:

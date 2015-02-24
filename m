@@ -1,3 +1,3 @@
 make clean
 make
-test/regress
+test/runt test0

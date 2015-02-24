@@ -24,6 +24,11 @@ class FuncPrefix
         {
             return m_TypeID;
         }
+        
+        DeclNode * GetType()
+        {
+            return m_TypeID->GetType();
+        }
     
     private:
         cSymbol * m_TypeID;

@@ -7,6 +7,7 @@
 #include "ExprNode.h"
 #include "cSymbol.h"
 #include "ArrayVal.h"
+#include "ArrayDecl.h"
 
 extern cSymbolTable * symbolTableRoot;
 
@@ -29,7 +30,14 @@ class VarPart : public ExprNode
         //Return's Type of Symbol
         DeclNode * GetType()
         {
-            return m_Sym->GetType();
+            if(m_Array == nullptr)
+            {
+                return m_Sym->GetType();
+            }
+            else
+            {
+                return m_Sym->GetType()->GetBaseType();
+            }
         }
         
         cSymbol * GetSym()

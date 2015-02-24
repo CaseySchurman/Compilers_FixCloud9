@@ -44,6 +44,11 @@ class VarDecl : public DeclNode
             return m_Type->GetName();
         }
         
+        DeclNode * GetBaseType()
+        {
+            return m_Sym->GetType();
+        }
+        
     private:
         cSymbol * m_Type;
         cSymbol * m_Sym;

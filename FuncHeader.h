@@ -32,6 +32,11 @@ class FuncHeader
         {
             return m_Prefix->GetTypeSymbol();
         }
+        
+        DeclNode * GetType()
+        {
+            return m_Prefix->GetType();
+        }
     
     private:
         FuncPrefix * m_Prefix;

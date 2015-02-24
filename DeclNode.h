@@ -47,6 +47,8 @@ class DeclNode : public cAstNode
             return false;
         }
         
+        virtual DeclNode * GetBaseType() = 0;
+        
         //GetTypeName must be implemented by child classes
         virtual string GetTypeName() = 0;
 };
